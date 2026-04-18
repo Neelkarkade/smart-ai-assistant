@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart AI Assistant</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+            background: linear-gradient(135deg, #74ebd5, #9face6);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            width: 420px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        input {
+            width: 90%;
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            margin-top: 10px;
+        }
+
+        button {
+            margin: 6px;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 20px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .plan { background: #4facfe; }
+        .health { background: #43e97b; }
+        .ai { background: #fa709a; }
+
+        .suggest button {
+            background: #eee;
+            color: #333;
+            font-size: 12px;
+        }
+
+        #result {
+            margin-top: 15px;
+            padding: 12px;
+            background: #f5f5f5;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <h2>Smart AI Assistant</h2>
+
+    <input id="input" placeholder="Enter your task..." />
+
+    <br>
+
+    <button class="plan" onclick="callAPI('plan')">Plan</button>
+    <button class="health" onclick="callAPI('health')">Health</button>
+    <button class="ai" onclick="callAPI('ai')">AI</button>
+
+    <!-- 🔥 Suggestions -->
+    <div class="suggest">
+        <p><b>Try:</b></p>
+        <button onclick="setInput('Plan my day')">Plan my day</button>
+        <button onclick="setInput('I feel tired')">Tired</button>
+        <button onclick="setInput('I have meeting and coding work')">Meeting + Coding</button>
+        <button onclick="setInput('headache')">Headache</button>
+    </div>
+
+    <div id="result">Your answer will appear here...</div>
+
+</div>
+
+<script>
+function callAPI(type) {
+    let text = document.getElementById("input").value;
+
+    fetch("/api/" + type + "?input=" + encodeURIComponent(text))
+        .then(res => res.text())
+        .then(data => document.getElementById("result").innerText = data);
+}
+
+function setInput(text) {
+    document.getElementById("input").value = text;
+}
+</script>
+
+</body>
+</html>
